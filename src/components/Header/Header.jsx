@@ -68,9 +68,11 @@ const Header = () => {
                         // onClick={() => navigate("/order")}
                         style={{ cursor: "pointer" }}
                     >
-                        <ShoppingCartOutlined
-                            style={{ fontSize: "30px", color: "#fff" }}
-                        />
+                        <Badge count={4} size="small">
+                            <ShoppingCartOutlined
+                                style={{ fontSize: "30px", color: "#fff" }}
+                            />
+                        </Badge>
                         <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
                     </div>
                 </Col>
