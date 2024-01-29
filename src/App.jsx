@@ -41,18 +41,18 @@ const App = () => {
                     element: <TypeProductPage />,
                 },
                 {
-                    path: "sign-in",
-                    element: <SignInPage />,
-                },
-                {
-                    path: "sign-up",
-                    element: <SignUpPage />,
-                },
-                {
                     path: "product-details",
                     element: <ProductDetailPage />,
                 },
             ],
+        },
+        {
+            path: "sign-in",
+            element: <SignInPage />,
+        },
+        {
+            path: "sign-up",
+            element: <SignUpPage />,
         },
     ]);
 
