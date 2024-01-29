@@ -6,6 +6,7 @@ import slider3 from "../../assets/images/slider3.webp";
 import SliderComponent from "../../components/SliderComponent/SliderComponent";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import NavBarComponent from "../../components/NavBarComponent/NavBarComponent";
+import { Col, Row } from "antd";
 
 const HomePage = () => {
     const arr = ["TV", "Tu lanh", "Lap top"];
@@ -28,16 +29,38 @@ const HomePage = () => {
             >
                 <SliderComponent arrImages={[slider1, slider2, slider3]} />
                 <WrapperProducts>
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
-                    <CardComponent />
+                    <Row gutter={[26, 26]}>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                        <Col lg={4}>
+                            <CardComponent />
+                        </Col>
+                    </Row>
                 </WrapperProducts>
                 <div
                     style={{

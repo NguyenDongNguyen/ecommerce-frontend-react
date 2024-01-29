@@ -13,6 +13,8 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+    const [isShowPassword, setIsShowPassword] = useState(false);
+    const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleNavigateSignIn = () => {
@@ -49,7 +51,7 @@ const SignUpPage = () => {
                     />
                     <div style={{ position: "relative" }}>
                         <span
-                            // onClick={() => setIsShowPassword(!isShowPassword)}
+                            onClick={() => setIsShowPassword(!isShowPassword)}
                             style={{
                                 zIndex: 10,
                                 position: "absolute",
@@ -57,21 +59,21 @@ const SignUpPage = () => {
                                 right: "8px",
                             }}
                         >
-                            {/* {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />} */}
+                            {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
                         </span>
                         <InputForm
                             placeholder="password"
                             style={{ marginBottom: "10px" }}
-                            // type={isShowPassword ? "text" : "password"}
+                            type={isShowPassword ? "text" : "password"}
                             // value={password}
                             // onChange={handleOnchangePassword}
                         />
                     </div>
                     <div style={{ position: "relative" }}>
                         <span
-                            // onClick={() =>
-                            //     setIsShowConfirmPassword(!isShowConfirmPassword)
-                            // }
+                            onClick={() =>
+                                setIsShowConfirmPassword(!isShowConfirmPassword)
+                            }
                             style={{
                                 zIndex: 10,
                                 position: "absolute",
@@ -79,15 +81,15 @@ const SignUpPage = () => {
                                 right: "8px",
                             }}
                         >
-                            {/* {isShowConfirmPassword ? (
+                            {isShowConfirmPassword ? (
                                 <EyeFilled />
                             ) : (
                                 <EyeInvisibleFilled />
-                            )} */}
+                            )}
                         </span>
                         <InputForm
                             placeholder="comfirm password"
-                            // type={isShowConfirmPassword ? "text" : "password"}
+                            type={isShowConfirmPassword ? "text" : "password"}
                             // value={confirmPassword}
                             // onChange={handleOnchangeConfirmPassword}
                         />

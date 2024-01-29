@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Col } from "antd";
 import {
     StyleNameProduct,
     WrapperCardStyle,

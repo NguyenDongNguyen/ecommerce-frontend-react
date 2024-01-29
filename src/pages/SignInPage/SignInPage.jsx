@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import InputForm from "../../components/InputForm/InputForm";
 import {
@@ -12,6 +12,7 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
+    const [isShowPassword, setIsShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleNavigateSignUp = () => {
@@ -47,7 +48,7 @@ const SignInPage = () => {
                         // onChange={handleOnchangeEmail}
                     />
                     <div style={{ position: "relative" }}>
-                        {/* <span
+                        <span
                             onClick={() => setIsShowPassword(!isShowPassword)}
                             style={{
                                 zIndex: 10,
@@ -57,10 +58,10 @@ const SignInPage = () => {
                             }}
                         >
                             {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-                        </span> */}
+                        </span>
                         <InputForm
                             placeholder="password"
-                            // type={isShowPassword ? "text" : "password"}
+                            type={isShowPassword ? "text" : "password"}
                             // value={password}
                             // onChange={handleOnchangePassword}
                         />
