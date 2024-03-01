@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import InputForm from "../../components/InputForm/InputForm";
 import {
@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import * as UserService from "../../services/UserService";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
+import * as message from "../../components/Message/Message";
 
 const SignUpPage = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -24,7 +25,16 @@ const SignUpPage = () => {
     const navigate = useNavigate();
 
     const mutation = useMutationHooks((data) => UserService.signupUser(data));
-    const { data, isPending } = mutation;
+    const { data, isPending, isSuccess, isError } = mutation;
+
+    useEffect(() => {
+        if (isSuccess) {
+            message.success();
+            handleNavigateSignIn();
+        } else if (isError) {
+            message.error();
+        }
+    }, [isSuccess, isError]);
 
     const handleOnchangeEmail = (value) => {
         setEmail(value);

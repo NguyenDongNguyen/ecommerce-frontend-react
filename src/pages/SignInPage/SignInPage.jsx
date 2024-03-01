@@ -13,15 +13,51 @@ import { useNavigate } from "react-router-dom";
 import * as UserService from "../../services/UserService";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { updateUser } from "../../redux/slicers/userSlice";
 
 const SignInPage = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
 
     const mutation = useMutationHooks((data) => UserService.loginUser(data));
-    const { data, isPending } = mutation;
+    const { data, isPending, isSuccess } = mutation;
+
+    useEffect(() => {
+        if (isSuccess) {
+            // if (location?.state) {
+            //     navigate(location?.state);
+            // } else {
+            //     navigate("/");
+            // }
+            navigate("/");
+            localStorage.setItem("access_token", JSON.stringify(data?.access_token));
+            // localStorage.setItem(
+            //     "refresh_token",
+            //     JSON.stringify(data?.refresh_token)
+            // );
+            if (data?.access_token) {
+                const decoded = jwtDecode(data?.access_token);
+                if (decoded?.id) {
+                    handleGetDetailsUser(decoded?.id, data?.access_token);
+                }
+            }
+        }
+    }, [isSuccess]);
+
+    const handleGetDetailsUser = async (id, token) => {
+        // const storage = localStorage.getItem("refresh_token");
+        // const refreshToken = JSON.parse(storage);
+        const res = await UserService.getDetailsUser(id, token);
+        console.log("🚀 ~ handleGetDetailsUser ~ res:", res);
+        dispatch(updateUser({ ...res?.data, access_token: token }));
+    };
 
     const handleNavigateSignUp = () => {
         navigate("/sign-up");

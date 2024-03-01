@@ -14,9 +14,12 @@ import {
 } from "@ant-design/icons";
 import ButttonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const user = useSelector((state) => state.user);
+    console.log("🚀 ~ Header ~ user:", user);
 
     return (
         <div
@@ -52,20 +55,24 @@ const Header = () => {
                 >
                     <WrapperHeaderAccout>
                         <UserOutlined style={{ fontSize: "30px" }} />
-                        <div
-                            onClick={() => navigate('/sign-in')}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <WrapperTextHeaderSmall>
-                                Đăng nhập/Đăng ký
-                            </WrapperTextHeaderSmall>
-                            <div>
+                        {user?.name ? (
+                            <div>{user.name}</div>
+                        ) : (
+                            <div
+                                onClick={() => navigate("/sign-in")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 <WrapperTextHeaderSmall>
-                                    Tài khoản
+                                    Đăng nhập/Đăng ký
                                 </WrapperTextHeaderSmall>
-                                <CaretDownOutlined />
+                                <div>
+                                    <WrapperTextHeaderSmall>
+                                        Tài khoản
+                                    </WrapperTextHeaderSmall>
+                                    <CaretDownOutlined />
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </WrapperHeaderAccout>
                     <div
                         // onClick={() => navigate("/order")}
