@@ -1,5 +1,5 @@
 import { Badge, Button, Col, Popover } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {
     WrapperContentPopup,
     WrapperHeader,
@@ -14,12 +14,61 @@ import {
 } from "@ant-design/icons";
 import ButttonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as UserService from "../../services/UserService";
+import { resetUser } from "../../redux/slicers/userSlice";
 
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    console.log("🚀 ~ Header ~ user:", user);
+
+    const [loading, setLoading] = useState(false);
+    const [isOpenPopup, setIsOpenPopup] = useState(false);
+
+    const handleLogout = async () => {
+        setLoading(true);
+        await UserService.logoutUser();
+        dispatch(resetUser());
+        setLoading(false);
+    };
+
+    const content = (
+        <div>
+            <WrapperContentPopup onClick={() => handleClickNavigate("profile")}>
+                Thông tin người dùng
+            </WrapperContentPopup>
+            {user?.isAdmin && (
+                <WrapperContentPopup onClick={() => handleClickNavigate("admin")}>
+                    Quản lí hệ thống
+                </WrapperContentPopup>
+            )}
+            <WrapperContentPopup onClick={() => handleClickNavigate(`my-order`)}>
+                Đơn hàng của tôi
+            </WrapperContentPopup>
+            <WrapperContentPopup onClick={() => handleClickNavigate()}>
+                Đăng xuất
+            </WrapperContentPopup>
+        </div>
+    );
+
+    const handleClickNavigate = (type) => {
+        if (type === "profile") {
+            navigate("/profile-user");
+        } else if (type === "admin") {
+            navigate("/system/admin");
+        } else if (type === "my-order") {
+            navigate("/my-order", {
+                state: {
+                    id: user?.id,
+                    token: user?.access_token,
+                },
+            });
+        } else {
+            handleLogout();
+        }
+        // setIsOpenPopup(false);
+    };
 
     return (
         <div
@@ -56,7 +105,27 @@ const Header = () => {
                     <WrapperHeaderAccout>
                         <UserOutlined style={{ fontSize: "30px" }} />
                         {user?.name ? (
-                            <div>{user.name}</div>
+                            <>
+                                <Popover
+                                    content={content}
+                                    trigger="click"
+                                    open={isOpenPopup}
+                                >
+                                    <div
+                                        style={{
+                                            cursor: "pointer",
+                                            maxWidth: 100,
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                        }}
+                                        onClick={() =>
+                                            setIsOpenPopup((prev) => !prev)
+                                        }
+                                    >
+                                        {user?.name || user?.email}
+                                    </div>
+                                </Popover>
+                            </>
                         ) : (
                             <div
                                 onClick={() => navigate("/sign-in")}
